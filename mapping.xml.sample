@@ -1,0 +1,50 @@
+<meta>
+    <settings>
+        <salesforce
+                username=""
+                password=""
+                organizationId="00D1N000001vG04"/>
+        <device42
+                url=""
+                user=""
+                password=""/>
+    </settings>
+
+    <tasks>
+        <task enable="true" description="Copy Devices from Device42 to Samanage">
+            <api>
+                <target target="salesforce"/>
+                <resource model="device" target="device42" method="GET" extra-filter="last_updated_gt=2016-09-04 00:00" path="/api/1.0/devices/all/?is_it_blade_host=no&amp;is_it_switch=no&amp;limit=100&amp;"/>
+            </api>
+            <mapping callback="from_d42" key="device_id" source="Devices">
+                <field resource="name" type="string" target="name" target-ci-type="Hardware"/>
+                <field resource="os" type="string" target="operating_system" target-ci-type="Hardware"/>
+                <field resource="osver" type="string" target="operating_system_version" target-ci-type="Hardware"/>
+                <field resource="ram" type="integer" target="total_physical_memory" target-ci-type="Hardware"/>
+                <field resource="cpucount" type="integer" target="number_of_processors" target-ci-type="Cpu"/>
+                <field resource="cpuspeed" type="string" target="max_clock_speed" target-ci-type="Cpu"/>
+                <field resource="hddraid" type="string" target="name" target-ci-type="Drive"/>
+                <field resource="hddraid_type" type="string" target="drive_type" target-ci-type="Drive"/>
+                <field resource="hddsize" type="string" target="total_size" target-ci-type="Drive"/>
+                <field resource="ram" type="string" target="capacity" target-ci-type="Memory"/>
+
+                <field resource="custom_fields" url="/api/1.0/software_details/?device_id="
+                       extra-api-additional-param="device_id" sub-key="software_details"  target-ci-type="Software">
+                    <sub-field resource="software" type="string" target="name"></sub-field>
+                    <sub-field resource="version" type="string" target="version"></sub-field>
+                    <sub-field resource="vendor" type="string" target="publisher"></sub-field>
+                </field>
+
+                <field resource="custom_fields" url="/api/1.0/switchports/?switch_id="
+                       extra-api-additional-param="device_id" sub-key="switchports"  target-ci-type="Port">
+                    <sub-field resource="port" type="string" target="name"></sub-field>
+                    <sub-field resource="switch" sub-resource="type" type="string" target="port_type"></sub-field>
+                </field>
+
+                <field resource="ip_addresses" target-ci-type="Network">
+                    <sub-field resource="ip" type="string" target="ip_address"></sub-field>
+                </field>
+            </mapping>
+        </task>
+    </tasks>
+</meta>
