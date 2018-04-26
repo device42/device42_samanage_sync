@@ -1,7 +1,7 @@
 [Device42](http://www.device42.com/) is a Continuous Discovery software for your IT Infrastructure. It helps you automatically maintain an up-to-date inventory of your physical, virtual, and cloud servers and containers, network components, software/services/applications, and their inter-relationships and inter-dependencies.
 
 
-This repository contains script that helps you sync data between SAManage and Device42 back and forth.
+This repository contains script that helps you sync data between Samanage and Device42 back and forth.
 
 ### Download and Installation
 -----------------------------
