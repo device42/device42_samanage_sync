@@ -11,7 +11,7 @@ This repository contains script that helps you sync data between Samanage and De
     * chardet==3.0.4
     * idna==2.6
     * requests==2.18.4
-    * urllib3==1.22
+    * urllib3==1.24.2
     * salesforce-bulk==2.1.0
     * simple-salesforce==0.73.0
     * six==1.11.0
